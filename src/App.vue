@@ -10,7 +10,7 @@ const GRID_SIZE = 7;
 const CELL_SIZE = 10;
 
 const birthday = new Date('2024-03-14T00:00:00');
-const daysSinceBirth = Math.floor((Date.now() - birthday) / (1000 * 60 * 60 * 24));
+const daysSinceBirth = Math.floor((Date.now() - birthday.getTime()) / (1000 * 60 * 60 * 24));
 // console.log(birthday, daysSinceBirth);
 const puzzleIndex = daysSinceBirth;
 
