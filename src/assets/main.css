@@ -45,8 +45,8 @@ body {
 [id^='circle'] {
   width: var(--element-size);
   height: var(--element-size);
-  /* transition: all; */
-  /* transition-duration: 0.2s; */
+  transition: all;
+  transition-duration: 0.2s;
   &.colour-1 {
     background-color: var(--color-secondary-pane);
   }
