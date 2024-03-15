@@ -28,7 +28,6 @@ const updateSelectedColour = (newSelectedColour: number) => {
 const updateCell = (cellIndex: number, newValue: number) => {
   // Don't update cells which were in the original puzzle
   if (original[cellIndex] != -1) {
-    // console.log('respecting original', original);
     return;
   }
   var cellValue = puzzle[cellIndex];
@@ -65,7 +64,7 @@ const winGame = () => {
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     const style = getComputedStyle(document.documentElement);
-    // document.documentElement.style.setProperty('--max-element-size', '100px');
+
     element.animate(
       [
         {
