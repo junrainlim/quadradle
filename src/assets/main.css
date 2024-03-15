@@ -1,0 +1,113 @@
+html {
+  --color-text: #cdd6f4;
+  --color-background: #1e1e2e;
+  --color-secondary-pane: #11111b;
+  --color-cursor: #f5e0dc;
+  --theme-colour-0: #cba6f7;
+  --theme-colour-1: #f38ba8;
+  --theme-colour-2: #fab387;
+  --theme-colour-3: #f9e2af;
+  --theme-colour-4: #a6e3a1;
+  --theme-colour-5: #89dceb;
+  --theme-colour-6: #89b4fa;
+  --grid-size: 7;
+  --min-element-size: 10vw;
+  --max-element-size: 50px;
+  --element-size: calc(min(var(--min-element-size), var(--max-element-size)));
+  --element-gap-size: calc(var(--element-size) / 10);
+  --grid-width: calc(
+    var(--element-size) * var(--grid-size) + var(--element-gap-size) * (var(--grid-size) - 1)
+  );
+  background-color: var(--color-background);
+  max-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+body {
+  padding: 20px;
+  color: var(--color-text);
+  background: var(--color-background);
+  line-height: 1.6;
+  font-family: 'Madimi One', sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+#title {
+  font-size: 5vh;
+  font-weight: bold;
+  text-align: center;
+}
+
+[id^='cell'],
+[id^='circle'] {
+  width: var(--element-size);
+  height: var(--element-size);
+  /* transition: all; */
+  /* transition-duration: 0.2s; */
+  &.colour-1 {
+    background-color: var(--color-secondary-pane);
+  }
+  &.colour0 {
+    background-color: var(--theme-colour-0);
+  }
+  &.colour1 {
+    background-color: var(--theme-colour-1);
+  }
+  &.colour2 {
+    background-color: var(--theme-colour-2);
+  }
+  &.colour3 {
+    background-color: var(--theme-colour-3);
+  }
+  &.colour4 {
+    background-color: var(--theme-colour-4);
+  }
+  &.colour5 {
+    background-color: var(--theme-colour-5);
+  }
+  &.colour6 {
+    background-color: var(--theme-colour-6);
+  }
+  &:hover {
+    outline-style: solid;
+    outline-color: var(--color-cursor);
+    outline-width: 5px;
+  }
+}
+
+#grid {
+  display: grid;
+  justify-content: center;
+  margin: auto;
+  width: var(--grid-width);
+  grid-template-columns: repeat(var(--grid-size), 1fr);
+  gap: var(--element-gap-size);
+}
+
+#palette {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: var(--grid-width);
+  background-color: var(--color-secondary-pane);
+  padding: calc(var(--element-gap-size) * 2);
+  border-radius: var(--element-size);
+}
+
+#helpButton,
+#resetButton {
+  font-size: 36px;
+  cursor: pointer;
+}
+
+dialog {
+  max-width: 400px;
+  margin: auto;
+  color: var(--color-text);
+  background-color: var(--color-secondary-pane);
+  text-align: justify;
+  border-radius: 20px;
+}
