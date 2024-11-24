@@ -14,7 +14,7 @@ const daysSinceBirth = Math.floor((Date.now() - birthday.getTime()) / (1000 * 60
 // console.log(birthday, daysSinceBirth);
 const puzzleIndex = daysSinceBirth;
 
-const original = puzzles[puzzleIndex];
+const original = puzzles[puzzleIndex % puzzles.length];
 // Creating deep copy
 var puzzle = reactive([...original]);
 const solution = solutions[puzzleIndex];
