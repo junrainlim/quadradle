@@ -14,10 +14,11 @@ const daysSinceBirth = Math.floor((Date.now() - birthday.getTime()) / (1000 * 60
 // console.log(birthday, daysSinceBirth);
 const puzzleIndex = daysSinceBirth;
 
-const original = puzzles[puzzleIndex % puzzles.length];
+const index = puzzleIndex % puzzles.length;
+const original = puzzles[index];
 // Creating deep copy
 var puzzle = reactive([...original]);
-const solution = solutions[puzzleIndex];
+const solution = solutions[index];
 
 var selectedColour = ref(0);
 
