@@ -1,11 +1,7 @@
 <script setup lang="ts">
 const props = defineProps(['index']);
 
-const emit = defineEmits(['clickedPalette']);
-
-const styleObject = {
-  borderRadius: '50%'
-};
+const emit = defineEmits(['clickedPalette', 'hoveredPalette', 'unhoveredPalette']);
 
 const clickListener = () => {
   emit('clickedPalette', props.index);
@@ -17,6 +13,8 @@ const clickListener = () => {
     :id="'circle' + props.index"
     :class="'circle colour' + props.index"
     @click="clickListener"
-    :style="styleObject"
+    @mouseenter="emit('hoveredPalette', props.index)"
+    @mouseleave="emit('unhoveredPalette')"
+    :style="{ borderRadius: '50%' }"
   ></div>
 </template>

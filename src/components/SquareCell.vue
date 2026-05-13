@@ -1,11 +1,7 @@
 <script setup lang="ts">
-const props = defineProps(['index', 'value']);
+const props = defineProps(['index', 'value', 'isOriginal', 'isHighlighted']);
 
 const emit = defineEmits(['clickedCell']);
-
-const styleObject = {
-  borderRadius: '5px'
-};
 
 const clickListener = () => {
   emit('clickedCell', props.index);
@@ -15,8 +11,8 @@ const clickListener = () => {
 <template>
   <div
     :id="'cell' + props.index"
-    :class="'cell colour' + props.value"
+    :class="['cell', 'colour' + props.value, { 'cell-original': props.isOriginal, 'cell-highlighted': props.isHighlighted }]"
     @click="clickListener"
-    :style="styleObject"
+    :style="{ borderRadius: '5px' }"
   ></div>
 </template>
