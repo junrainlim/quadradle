@@ -76,6 +76,15 @@ body {
     outline-color: var(--color-cursor);
     outline-width: 5px;
   }
+  &.cell-original {
+    box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.35);
+    border-radius: 5px;
+  }
+  &.cell-highlighted {
+    outline-style: solid;
+    outline-color: var(--color-cursor);
+    outline-width: 5px;
+  }
 }
 
 #grid {

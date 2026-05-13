@@ -20,6 +20,8 @@ var puzzle = reactive([...original]);
 const solution = solutions[puzzleIndex];
 
 var selectedColour = ref(0);
+var hoveredColour = ref<number | null>(null);
+const history = reactive<number[][]>([]);
 
 const updateSelectedColour = (newSelectedColour: number) => {
   selectedColour.value = newSelectedColour;
@@ -30,6 +32,8 @@ const updateCell = (cellIndex: number, newValue: number) => {
   if (original[cellIndex] != -1) {
     return;
   }
+  history.push([...toRaw(puzzle)]);
+
   var cellValue = puzzle[cellIndex];
 
   if (cellValue != -1) {
@@ -39,6 +43,14 @@ const updateCell = (cellIndex: number, newValue: number) => {
   }
 
   checkForWin();
+};
+
+const undoMove = () => {
+  const prev = history.pop();
+  if (!prev) return;
+  for (let i = 0; i < puzzle.length; i++) {
+    puzzle[i] = prev[i];
+  }
 };
 
 const checkForWin = () => {
@@ -51,9 +63,11 @@ const checkForWin = () => {
   // Disable pointer interaction
   const grid = document.getElementById('grid')!;
   const resetButton = document.getElementById('resetButton')!;
+  const undoButton = document.getElementById('undoButton')!;
 
   grid.style.pointerEvents = 'none';
   resetButton.style.pointerEvents = 'none';
+  undoButton.style.pointerEvents = 'none';
 
   winGame();
 };
@@ -114,6 +128,7 @@ const winGame = () => {
 };
 
 const resetGrid = () => {
+  history.length = 0;
   for (let i = 0; i < puzzle.length; i++) {
     puzzle[i] = original[i];
   }
@@ -138,11 +153,20 @@ const cellCallback = (index: number) => {
 const paletteCallback = (index: number) => {
   updateSelectedColour(index);
 };
+
+const paletteHoverCallback = (index: number) => {
+  hoveredColour.value = index;
+};
+
+const paletteUnhoverCallback = () => {
+  hoveredColour.value = null;
+};
 </script>
 
 <template>
   <header>
     <div id="title">Quadradle</div>
+    <div width="200px" style="font-size: 24px; text-align: center">#{{ puzzleIndex + 1 }}</div>
     <div
       style="
         margin: auto;
@@ -152,9 +176,15 @@ const paletteCallback = (index: number) => {
         justify-content: space-between;
       "
     >
-      <ResetButton @click="resetGrid" />
-      <div width="200px" style="font-size: 24px; text-align: center">#{{ puzzleIndex + 1 }}</div>
+      <a
+        class="material-symbols-outlined"
+        id="undoButton"
+        @click="undoMove"
+        :style="{ cursor: 'pointer', fontSize: '36px', opacity: history.length ? '1' : '0.3' }"
+        >undo</a
+      >
       <HelpButton />
+      <ResetButton @click="resetGrid" />
     </div>
   </header>
   <main>
@@ -183,6 +213,8 @@ const paletteCallback = (index: number) => {
           :size="CELL_SIZE"
           :index="i - 1"
           :value="puzzle[i - 1]"
+          :isOriginal="original[i - 1] !== -1"
+          :isHighlighted="hoveredColour !== null && puzzle[i - 1] === hoveredColour"
         />
       </div>
     </div>
@@ -191,6 +223,8 @@ const paletteCallback = (index: number) => {
       <div v-for="i in GRID_SIZE" :key="i">
         <PaletteCircle
           @clicked-palette="paletteCallback"
+          @hovered-palette="paletteHoverCallback"
+          @unhovered-palette="paletteUnhoverCallback"
           :size="CELL_SIZE"
           :index="i - 1"
           :style="
