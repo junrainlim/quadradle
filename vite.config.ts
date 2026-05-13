@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     vueJsx(),
   ],
-  base: "https://junrainlim.github.io/quadradle/",
+  base: "/quadradle/",
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
